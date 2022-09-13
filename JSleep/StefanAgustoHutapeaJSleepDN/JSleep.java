@@ -1,35 +1,11 @@
 package StefanAgustoHutapeaJSleepDN;
 /**
  * Case Study 
- * Stefan Agusto Hutapea (your name)
- * 2106700744 (a version number or a date)
+ * Stefan Agusto Hutapea
+ * 2106700744
  */
 public class JSleep
-{
-    // instance variables - replace the example below with your own
-    private int x;
-
-    /**
-     * Constructor for objects of class JSleep
-     */
-    public JSleep()
-    {
-        // initialise instance variables
-        x = 0;
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
-    
+{    
     //metode getHotelID = Return 0
     public int getHotelID(){
         return 0;
@@ -111,6 +87,4 @@ public class JSleep
         System.out.println("Admin Fee : " + jSleep.getAdminFee(100000));
         System.out.println("Total Price : " + jSleep.getTotalPrice(100000, 2));
     }
-
-
 }
