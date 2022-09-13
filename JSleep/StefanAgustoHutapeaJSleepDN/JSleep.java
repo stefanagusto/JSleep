@@ -1,6 +1,6 @@
 package StefanAgustoHutapeaJSleepDN;
 /**
- * Case Study 
+ * Case Study Modul 1
  * Stefan Agusto Hutapea
  * 2106700744
  */
@@ -13,7 +13,7 @@ public class JSleep
 
     //metode getHotelName = Return hotelName
     public String getHotelName(){
-        return "hotelName";
+        return "Hotel Antares";
     }
 
     //metode isDiscount = Return true
@@ -73,7 +73,7 @@ public class JSleep
         totalPrice = (price * numberOfNight) + getAdminFee(price * numberOfNight);
         return totalPrice;
     }
-    
+
     //method entry point(main)
     public static void main(String[] args){
         JSleep jSleep = new JSleep();
