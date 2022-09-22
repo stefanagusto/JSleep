@@ -13,7 +13,6 @@ public class Price
         this.price = price;
         this.discount = 0;
     }
-
     //constructor Price(double price, int discount) -> instance variable rebate -> 0
     public Price(double price, double discount)
     {

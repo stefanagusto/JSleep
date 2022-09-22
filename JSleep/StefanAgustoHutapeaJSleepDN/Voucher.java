@@ -11,8 +11,7 @@ public class Voucher
     private boolean used;
 
     //constructor
-
-    public Voucher(String name, int code, double minimum, Type type, double cut)
+    public Voucher(String name, int code, Type type, double minimum, double cut)
     {
         // initialise instance variables
         this.name = name;
@@ -45,13 +44,31 @@ public class Voucher
     {
         used = true;
         //checking type
-        if(type == Type.DISCOUNT)//if the type is discount, then the price will be discounted
+        if(type == Type.DISCOUNT)//if the type is discount, then the price will be discounted, but price can't be negative
         {
-            return price.price - (price.price * cut/100);
+            if(price.price - (price.price * cut / 100) >= 0)
+            {
+                return price.price - (price.price * cut / 100);
+            }
+            else
+            {
+                return 0;
+            }
         }
-        else//if the type is rebate, then price will be rebated
+        else if(type ==Type.REBATE)//if the type is rebate, then the price will be discounted, but price can't be negative
         {
-            return price.price - cut;
+            if(price.price - cut < 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return price.price - cut;
+            }
+        }
+        else
+        {
+            return price.price;
         }
     }
 }

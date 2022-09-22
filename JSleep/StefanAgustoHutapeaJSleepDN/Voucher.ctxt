@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Voucher
-comment1.params=name\ code\ minimum\ type\ cut
-comment1.target=Voucher(java.lang.String,\ int,\ double,\ Type,\ double)
+comment1.params=name\ code\ type\ minimum\ cut
+comment1.target=Voucher(java.lang.String,\ int,\ Type,\ double,\ double)
 comment2.params=
 comment2.target=boolean\ isUsed()
 comment3.params=price
