@@ -5,10 +5,6 @@ package StefanAgustoHutapeaJSleepDN;
  * 2106700744
  */
 
-
-
-
-
 public class JSleep
 {   
     
