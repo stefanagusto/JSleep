@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Mammal
+comment1.params=name\ size\ food\ leg
+comment1.target=Mammal(java.lang.String,\ int,\ type,\ int)
+comment2.params=
+comment2.target=int\ getLeg()
+comment3.params=leg
+comment3.target=void\ setLeg(int)
+comment4.params=
+comment4.target=void\ display()
+numComments=5

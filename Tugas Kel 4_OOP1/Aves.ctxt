@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Aves
+comment1.params=
+comment1.target=boolean\ getFly()
+comment2.params=fly
+comment2.target=void\ setFly(boolean)
+comment3.params=
+comment3.target=void\ display()
+numComments=4
