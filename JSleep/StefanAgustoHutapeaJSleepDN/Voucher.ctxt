@@ -7,6 +7,6 @@ comment2.target=boolean\ isUsed()
 comment3.params=price
 comment3.target=boolean\ canApply(Price)
 comment4.params=price
-comment4.target=Price\ apply(Price)
+comment4.target=double\ apply(Price)
 comment4.text=method\ apply(Price\ price)\ ->\ return\ price\ after\ apply\ voucher\r\ncalling\ this\ method\ will\ change\ used\ to\ true
 numComments=5

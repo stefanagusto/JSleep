@@ -42,19 +42,16 @@ public class Voucher
     /*method apply(Price price) -> return price after apply voucher
     calling this method will change used to true*/
     public double apply(Price price)
-
     {
         used = true;
         //checking type
         if(type == Type.DISCOUNT)//if the type is discount, then the price will be discounted
         {
-            price.price = price.price - (price.price * cut/100);
-            return price;
+            return price.price - (price.price * cut/100);
         }
         else//if the type is rebate, then price will be rebated
         {
-            price.price = price.price - cut;
-            return price;
+            return price.price - cut;
         }
     }
 }
