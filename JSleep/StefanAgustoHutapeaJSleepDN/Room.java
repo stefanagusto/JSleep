@@ -1,20 +1,19 @@
 package StefanAgustoHutapeaJSleepDN;
 
-
-public class Room
+//subclass of Serializable
+public class Room extends Serializable
 {
-    public String name;
     public int size;
     public Price price;
     public Facility facility;
-    
-    public Room(String name, int size, Price price, Facility facility)
+    public String name;
+
+    public Room(int id, String name, int size, Price price, Facility facility)
     {
-        // initialise instance variables
+        super(id);
         this.name = name;
         this.size = size;
         this.price = price;
         this.facility = facility;
-        
     }
 }

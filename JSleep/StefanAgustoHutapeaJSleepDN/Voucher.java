@@ -1,26 +1,26 @@
 package StefanAgustoHutapeaJSleepDN;
 
-public class Voucher
+public class Voucher extends Serializable
 {
     // instance variables 
-    public Type type;
-    public double cut;
     public String name;
-    public int code;
-    public double minimum;
     private boolean used;
+    public int code;
+    public Type type;
+    public double minimum, cut;
 
     //constructor
-    public Voucher(String name, int code, Type type, double minimum, double cut)
+    public Voucher(int id, String name, int code, Type type, boolean used, double minimum, double cut)
     {
-        // initialise instance variables
+        super(id);
         this.name = name;
         this.code = code;
-        this.minimum = minimum;
         this.type = type;
+        this.used = used;
+        this.minimum = minimum;
         this.cut = cut;
-        this.used = false;
     }
+
     //return variables instance used
     public boolean isUsed()
     {
@@ -38,6 +38,7 @@ public class Voucher
             return false;
         }
     }
+    
     /*method apply(Price price) -> return price after apply voucher
     calling this method will change used to true*/
     public double apply(Price price)
