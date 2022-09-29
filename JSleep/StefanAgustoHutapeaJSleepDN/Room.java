@@ -20,6 +20,7 @@ public class Room extends Serializable
         this.facility = facility;
         this.city = city;
         this.address = address;
+        this.bedType = BedType.SINGLE;
     }
 
     public String toString()
