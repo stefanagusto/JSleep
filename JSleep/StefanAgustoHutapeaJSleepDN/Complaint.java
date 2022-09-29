@@ -15,6 +15,6 @@ public class Complaint extends Serializable
     //return String from instance variable class
     public String toString()
     {
-        return "Date: " + date + "\nComplaint: " + desc;
+        return "Complaint ID: " + id + "\nDate: " + date + "\nDescription: " + desc;
     } 
 }
