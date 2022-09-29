@@ -3,8 +3,7 @@ package StefanAgustoHutapeaJSleepDN;
 public class Price
 {
     // instance variables - replace the example below with your own
-    public double price;
-    public double discount;
+    public double price, discount;
 
     //constructor Price(double price) -> instance variable price with parameter price, instance variable discount with value 0, instance variable rebate with value 0
     public Price(double price)
@@ -19,5 +18,9 @@ public class Price
         // initialise instance variables
         this.price = price;
         this.discount = discount;
+    }
+    public String toString()
+    {
+        return "Price: " + price + "\nDiscount: " + discount;
     }
 }
