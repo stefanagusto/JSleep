@@ -1,6 +1,6 @@
 package StefanAgustoHutapeaJSleepDN;
 
-public class Voucher extends Serializable
+public class Voucher extends Serializable implements FileParser
 {
     // instance variables 
     public String name;
@@ -71,5 +71,14 @@ public class Voucher extends Serializable
         {
             return price.price;
         }
+    }
+
+    public Object write()
+    {
+        return null;
+    }
+    public boolean read(String content)
+    {
+        return false;
     }
 }

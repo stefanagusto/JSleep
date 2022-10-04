@@ -1,7 +1,7 @@
 package StefanAgustoHutapeaJSleepDN;
 
 //subclass of Serializable
-public class Room extends Serializable
+public class Room extends Serializable implements FileParser
 {
     public int size;
     public Price price;
@@ -26,5 +26,14 @@ public class Room extends Serializable
     public String toString()
     {
         return "Room ID: " + id + "\nName: " + name + "\nSize: " + size + "\n" + price + "\nFacility: " + facility + "\nCity: " + city + "\nAddress: " + address;
+    }
+
+    public Object write()
+    {
+        return null;
+    }
+    public boolean read(String content)
+    {
+        return false;
     }
 }
