@@ -15,8 +15,6 @@ public class Payment extends Invoice
         this.to = new Date(to.getTime());
         this.from = new Date(from.getTime());
         this.roomId = roomId;
-        //To = 2 days after From
-        this.to.setDate(this.from.getDate() + 2);
     }
 
     public Payment(int id, Account buyer, Renter renter, int roomId, Date from, Date to)
@@ -25,8 +23,6 @@ public class Payment extends Invoice
         this.to = new Date(to.getTime());
         this.from = new Date(from.getTime());
         this.roomId = roomId;
-        //To = 2 days after From
-        this.to.setDate(this.from.getDate() + 2);
     }
 
     public String getTime()
