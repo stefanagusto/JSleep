@@ -1,4 +1,7 @@
 package StefanAgustoHutapeaJSleepDN;
+import java.util.Date;
+import java.util.ArrayList;
+
 
 //subclass of Serializable
 public class Room extends Serializable implements FileParser
@@ -10,6 +13,7 @@ public class Room extends Serializable implements FileParser
     public String address;
     public BedType bedType;
     public City city;
+    public ArrayList<Date> booked = new ArrayList<>();
 
     public Room(int id, String name, int size, Price price, Facility facility, City city, String address)
     {

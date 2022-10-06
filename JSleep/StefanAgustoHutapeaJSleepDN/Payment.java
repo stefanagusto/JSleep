@@ -1,31 +1,32 @@
 package StefanAgustoHutapeaJSleepDN;
-import java.util.Calendar;
+import java.util.Date;
 import java.text.SimpleDateFormat;
 
 //subclass of Invoice
 public class Payment extends Invoice
 {
-    public Calendar to, from;
+    public Date to, from;
     private int roomId;
 
-    public Payment(int id, int buyerId, int renterId, int roomId)
+
+    public Payment(int id, int buyerId, int renterId, int roomId, Date from, Date to)
     {
         super(id, buyerId, renterId);
-        this.to = Calendar.getInstance();
-        this.from = Calendar.getInstance();
+        this.to = new Date(to.getTime());
+        this.from = new Date(from.getTime());
         this.roomId = roomId;
         //To = 2 days after From
-        to.add(Calendar.DATE, 2);
+        this.to.setDate(this.from.getDate() + 2);
     }
 
-    public Payment(int id, Account buyer, Renter renter, int roomId)
+    public Payment(int id, Account buyer, Renter renter, int roomId, Date from, Date to)
     {
         super(id, buyer, renter);
-        this.to = Calendar.getInstance();
-        this.from = Calendar.getInstance();
+        this.to = new Date(to.getTime());
+        this.from = new Date(from.getTime());
         this.roomId = roomId;
         //To = 2 days after From
-        to.add(Calendar.DATE, 2);
+        this.to.setDate(this.from.getDate() + 2);
     }
 
     public String getTime()
@@ -34,10 +35,46 @@ public class Payment extends Invoice
         return new SimpleDateFormat("'Formatted Date = 'dd MMMM yyyy").format(time.getTime());
     }
 
-    public String getDuration()//Return duration from and to with simple date format
+    public static boolean availability(Date from,Date to,Room room)
     {
-        SimpleDateFormat SDFormat = new SimpleDateFormat("dd MMMM yyyy");
-        return SDFormat.format(from.getTime()) + " - " + SDFormat.format(to.getTime());
+        //if room available in that time(checking with booked arraylist), return true, else return false
+        if(room.booked.isEmpty())
+        {
+            return true;
+        }
+        //ERROR HANDLING 
+        //if to < from, return false
+        else if(to.compareTo(from) < 0)
+        {
+            return false;
+        }
+        else
+        {
+            for(int i = 0; i < room.booked.size(); i++)
+            {
+                if(room.booked.get(i).compareTo(from) == 0 || room.booked.get(i).compareTo(to) == 0)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    public static boolean makeBooking(Date from, Date to, Room room)
+    {
+        //if room available, date is added to booked arraylist and return true
+        //if room not available, return false
+        if(availability(from, to, room))
+        {
+            room.booked.add(from);
+            room.booked.add(to);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     
     public String print()

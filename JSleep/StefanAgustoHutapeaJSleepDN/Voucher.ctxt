@@ -1,7 +1,7 @@
 #BlueJ class context
 comment0.target=Voucher
-comment1.params=name\ code\ type\ minimum\ cut
-comment1.target=Voucher(java.lang.String,\ int,\ Type,\ double,\ double)
+comment1.params=id\ name\ code\ type\ used\ minimum\ cut
+comment1.target=Voucher(int,\ java.lang.String,\ int,\ Type,\ boolean,\ double,\ double)
 comment2.params=
 comment2.target=boolean\ isUsed()
 comment3.params=price
@@ -9,4 +9,8 @@ comment3.target=boolean\ canApply(Price)
 comment4.params=price
 comment4.target=double\ apply(Price)
 comment4.text=method\ apply(Price\ price)\ ->\ return\ price\ after\ apply\ voucher\r\ncalling\ this\ method\ will\ change\ used\ to\ true
-numComments=5
+comment5.params=
+comment5.target=java.lang.Object\ write()
+comment6.params=content
+comment6.target=boolean\ read(java.lang.String)
+numComments=7
