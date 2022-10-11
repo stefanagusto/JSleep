@@ -1,6 +1,7 @@
 package StefanAgustoHutapeaJSleepDN;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 //subclass of Invoice
 public class Payment extends Invoice
@@ -33,44 +34,42 @@ public class Payment extends Invoice
 
     public static boolean availability(Date from,Date to,Room room)
     {
-        //if room available in that time(checking with booked arraylist), return true, else return false
-        if(room.booked.isEmpty())
-        {
-            return true;
-        }
-        //ERROR HANDLING 
-        //if to < from, return false
-        else if(to.compareTo(from) < 0)
+        if(from.after(to) ||to.before(from)||from.equals(to))
         {
             return false;
         }
-        else//
+        for(Date i: room.booked)
         {
-            for(int i = 0; i < room.booked.size(); i++)
-            {
-                if(room.booked.get(i).compareTo(from) == 0 || room.booked.get(i).compareTo(to) == 0)
-                {
-                    return false;
-                }
+            if (from.equals(i)){
+                return false;
             }
-            return true;
+            else if(from.before(i) && to.after(i))
+            {
+                return false;
+            }
         }
+        return true;
     }
 
     public static boolean makeBooking(Date from, Date to, Room room)
     {
-        //if room available, date is added to booked arraylist and return true
-        //if room not available, return false
-        if(availability(from, to, room))
+        if(availability(from,to,room))
         {
-            room.booked.add(from);
-            room.booked.add(to);
+            while(from.before(to))
+            {
+                room.booked.add(from);
+                Calendar c = Calendar.getInstance();
+                c.setTime(from);
+                c.add(Calendar.DATE,1);
+                from = c.getTime();
+            }
             return true;
         }
         else
         {
             return false;
         }
+        
     }
     
     public String print()

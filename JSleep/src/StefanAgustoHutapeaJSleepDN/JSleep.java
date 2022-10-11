@@ -10,8 +10,7 @@ import java.sql.Date;
 public class JSleep
 {   
     public static Room createRoom(){
-        Room room = new Room(1, "Room 1", 2, new Price(1, 100000), Facility.AC, City.JAKARTA, "Jl. Jalan");
-        return room;
+        return new Room(1, "Room 1", 2, new Price(1, 100000), Facility.AC, City.JAKARTA, "Jl. Jalan");
     }
 
     public static void main(String[] args)
@@ -30,9 +29,9 @@ public class JSleep
         Date start3 = Date.valueOf("2022-8-18");
         Date end3 = Date.valueOf("2022-8-20");
         System.out.println(Payment.makeBooking(start3, end3,RoomB));
-        System.out.println("Membuat booking dari tanggal 20 hingga 21");
-        Date start4 = Date.valueOf("2022-8-20");
-        Date end4 = Date.valueOf("2022-8-21");
+        System.out.println("Membuat booking dari tanggal 20 hingga 17");
+        Date start4 = Date.valueOf("2022-8-22");
+        Date end4 = Date.valueOf("2022-9-17");
         System.out.println(Payment.makeBooking(start4, end4,RoomA));
         System.out.print("Hello from Intellij");
     }
