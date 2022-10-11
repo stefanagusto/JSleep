@@ -22,9 +22,9 @@ public class Invoice extends Serializable
 
     /*Two overloading constructor*/
 
-    protected Invoice(int id, int buyerId, int renterId)
+    protected Invoice(int buyerId, int renterId)
     {
-        super(id);
+        super();
         this.buyerId = buyerId;
         this.renterId = renterId;
         this.time = new Date();
@@ -32,9 +32,9 @@ public class Invoice extends Serializable
         this.status = PaymentStatus.WAITING;
     }
 
-    public Invoice(int id, Account buyer, Renter renter)
+    public Invoice(Account buyer, Renter renter)
     {
-        super(id);
+        super();
         this.buyerId = buyer.id;
         this.renterId = renter.id;
         this.time = new Date();

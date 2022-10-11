@@ -5,9 +5,9 @@ public class Complaint extends Serializable
     public String desc, date;
     /*Two overloading constructor*/
 
-    protected Complaint(int id, String date, String desc)
+    protected Complaint(String date, String desc)
     {
-        super(id);
+        super();
         this.date = date;
         this.desc = desc;
     }

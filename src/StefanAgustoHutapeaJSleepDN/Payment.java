@@ -10,17 +10,17 @@ public class Payment extends Invoice
     private int roomId;
 
 
-    public Payment(int id, int buyerId, int renterId, int roomId, Date from, Date to)
+    public Payment(int buyerId, int renterId, int roomId, Date from, Date to)
     {
-        super(id, buyerId, renterId);
+        super(buyerId, renterId);
         this.to = new Date(to.getTime());
         this.from = new Date(from.getTime());
         this.roomId = roomId;
     }
 
-    public Payment(int id, Account buyer, Renter renter, int roomId, Date from, Date to)
+    public Payment(Account buyer, Renter renter, int roomId, Date from, Date to)
     {
-        super(id, buyer, renter);
+        super(buyer, renter);
         this.to = new Date(to.getTime());
         this.from = new Date(from.getTime());
         this.roomId = roomId;

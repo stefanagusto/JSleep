@@ -1,8 +1,9 @@
 package StefanAgustoHutapeaJSleepDN;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
- * Case Study Modul 3
+ * Case Study Modul 5
  * Stefan Agusto Hutapea
  * 2106700744
  */
@@ -10,29 +11,15 @@ import java.sql.Date;
 public class JSleep
 {   
     public static Room createRoom(){
-        return new Room(1, "Room 1", 2, new Price(1, 100000), Facility.AC, City.JAKARTA, "Jl. Jalan");
+        return new Room("Room 1", 2, new Price(1, 100000), Facility.AC, City.JAKARTA, "Jl. Jalan");
     }
 
     public static void main(String[] args)
     {
-        Room RoomA = JSleep.createRoom();
-        Room RoomB = JSleep.createRoom();
-        System.out.println("Membuat booking dari tanggal 15 hingga 20");
-        Date start = Date.valueOf("2022-8-15");
-        Date end = Date.valueOf("2022-8-20");
-        System.out.println(Payment.makeBooking(start, end,RoomA));
-        System.out.println("Membuat booking dari tanggal 18 hingga 20");
-        Date start2 = Date.valueOf("2022-8-18");
-        Date end2 = Date.valueOf("2022-8-20");
-        System.out.println(Payment.makeBooking(start2, end2,RoomA));
-        System.out.println("Membuat booking dari tanggal 18 hingga 20 untuk kamar berbeda");
-        Date start3 = Date.valueOf("2022-8-18");
-        Date end3 = Date.valueOf("2022-8-20");
-        System.out.println(Payment.makeBooking(start3, end3,RoomB));
-        System.out.println("Membuat booking dari tanggal 20 hingga 17");
-        Date start4 = Date.valueOf("2022-8-22");
-        Date end4 = Date.valueOf("2022-9-17");
-        System.out.println(Payment.makeBooking(start4, end4,RoomA));
-        System.out.print("Hello from Intellij");
+        ArrayList<Room> RoomSerialized = new ArrayList<Room>();
+        for(int i = 0; i<5; i++){
+            RoomSerialized.add(i, JSleep.createRoom());
+            System.out.println(RoomSerialized.get(i).toString());
+        }
     }
 }

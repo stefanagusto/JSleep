@@ -15,9 +15,9 @@ public class Room extends Serializable implements FileParser
     public City city;
     public ArrayList<Date> booked = new ArrayList<>();
 
-    public Room(int id, String name, int size, Price price, Facility facility, City city, String address)
+    public Room(String name, int size, Price price, Facility facility, City city, String address)
     {
-        super(id);
+        super();
         this.name = name;
         this.size = size;
         this.price = price;
