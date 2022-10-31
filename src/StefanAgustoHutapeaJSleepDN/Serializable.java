@@ -5,7 +5,7 @@ public class Serializable
 {
     public final int id;
     //Variabel Instance name mapCounter with data type HashMap with generic Class<?> as Key and Integer as Value that is serial.
-    private static final HashMap<Class<?>, Integer> mapCounter = new HashMap<Class<?>, Integer>();
+    private static HashMap<Class<?>, Integer> mapCounter = new HashMap<Class<?>, Integer>();
 
 
     protected Serializable()
@@ -41,7 +41,7 @@ public class Serializable
 
     public <T> Integer setClosingId(Class<T> set, int num)
     {
-        return mapCounter.replace(set, num);
+        return mapCounter.put(set, num);
     }
 
     public <T> Integer getClosingId(Class<T> get)
