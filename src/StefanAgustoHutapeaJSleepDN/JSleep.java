@@ -40,17 +40,14 @@ public class JSleep
     public static List<Room> filterByCity(List<Room> list, String search, int page, int pageSize)
     {
         List<Room> result = new ArrayList<>();
-        int start = page * pageSize;
-        int end = start + pageSize;
-        for (int i = start; i < end; i++)
+        for (Room room : list)
         {
-            Room room = list.get(i);
             if (room.city.name().toLowerCase().contains(search.toLowerCase()))
             {
                 result.add(room);
             }
         }
-        return result;
+        return result.subList(page * pageSize, Math.min((page + 1) * pageSize, result.size()));
     }
 
     public static List<Room> filterByPrice(List<Room> list, double minPrice, double maxPrice)
@@ -69,16 +66,13 @@ public class JSleep
     public static List<Room> filterByAccountId(List<Room> list, int accountId, int page, int pageSize)
     {
         List<Room> result = new ArrayList<>();
-        int start = page * pageSize;
-        int end = start + pageSize;
-        for (int i = start; i < end; i++)
+        for (Room room : list)
         {
-            Room room = list.get(i);
             if (room.accountId == accountId)
             {
                 result.add(room);
             }
         }
-        return result;
+        return result.subList(page * pageSize, Math.min((page + 1) * pageSize, result.size()));
     }
 }
