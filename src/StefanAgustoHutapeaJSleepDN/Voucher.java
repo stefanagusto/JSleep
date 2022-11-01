@@ -1,6 +1,6 @@
 package StefanAgustoHutapeaJSleepDN;
 
-public class Voucher extends Serializable implements FileParser
+public class Voucher extends Serializable
 {
     // instance variables 
     public String name;

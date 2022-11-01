@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 
 //subclass of Serializable
-public class Room extends Serializable implements FileParser
+public class Room extends Serializable
 {
-    public int size;
+    public int size, accountId;
     public Price price;
     public Facility facility;
     public String name;
@@ -15,7 +15,7 @@ public class Room extends Serializable implements FileParser
     public City city;
     public ArrayList<Date> booked = new ArrayList<>();
 
-    public Room(String name, int size, Price price, Facility facility, City city, String address)
+    public Room(int accountId, String name, int size, Price price, Facility facility, City city, String address)
     {
         super();
         this.name = name;
@@ -29,7 +29,7 @@ public class Room extends Serializable implements FileParser
 
     public String toString()
     {
-        return "Room ID: " + id + "\nName: " + name + "\nSize: " + size + "\n" + price + "\nFacility: " + facility + "\nCity: " + city + "\nAddress: " + address;
+        return "Name: " + name + "\nBedType: " + bedType + "\nSize: " + size + "\n" + price + "\nFacility: " + facility + "\nCity: " + city + "\nAddress: " + address + "\nID:"  + id;
     }
 
     public Object write()

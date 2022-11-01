@@ -1,39 +1,84 @@
 package StefanAgustoHutapeaJSleepDN;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.*;
+
 
 /**
- * Tugas Pendahuluan 6
+ * Case Study 6
  * Stefan Agusto Hutapea
  * 2106700744
  */
 
 public class JSleep
 {   
-    class Country{
-        public String name;
-        public int population;
-        public List<String> listOfStates;
-    }
-
     public static void main(String[] args)
     {
-        String filepath= "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\city.json";
-        Gson gson = new Gson();
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(filepath));
-            Country input = gson.fromJson(br, Country.class);
-            System.out.println("Name: " + input.name);
-            System.out.println("Population: " + input.population);
-            System.out.println("States: ");
-            input.listOfStates.forEach(state -> System.out.println(state));
+        Renter testRegex = new Renter("Netlab_", "081234567890", "Jl. Margonda Raya");
+        Renter testRegexFail = new Renter("netlab", "081", "Jalan");
+        System.out.println(testRegex.validate());
+        System.out.println(testRegexFail.validate());
+
+        try
+        {
+            String filepath = "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\src\\json\\randomRoomList.json";
+
+            JsonTable<Room> tableRoom = new JsonTable<>(Room.class, filepath);
+            List<Room> filterTableRoom = filterByCity(tableRoom, "medan", 0, 5);
+            filterTableRoom.forEach(room -> System.out.println(room.toString()));
         }
-        catch(IOException e){
-            e.printStackTrace();
+        catch (Throwable t)
+        {
+            t.printStackTrace();
         }
+    }
+
+    public static Room createRoom(){
+        return new Room(1, "Room 1", 2, new Price(1, 100000), Facility.AC, City.JAKARTA, "Jl. Jalan");
+    }
+
+    public static List<Room> filterByCity(List<Room> list, String search, int page, int pageSize)
+    {
+        List<Room> result = new ArrayList<>();
+        int start = page * pageSize;
+        int end = start + pageSize;
+        for (int i = start; i < end; i++)
+        {
+            Room room = list.get(i);
+            if (room.city.name().toLowerCase().contains(search.toLowerCase()))
+            {
+                result.add(room);
+            }
+        }
+        return result;
+    }
+
+    public static List<Room> filterByPrice(List<Room> list, double minPrice, double maxPrice)
+    {
+        List<Room> result = new ArrayList<>();
+        for (Room room : list)
+        {
+            if (room.price.price >= minPrice && room.price.price <= maxPrice)
+            {
+                result.add(room);
+            }
+        }
+        return result;
+    }
+
+    public static List<Room> filterByAccountId(List<Room> list, int accountId, int page, int pageSize)
+    {
+        List<Room> result = new ArrayList<>();
+        int start = page * pageSize;
+        int end = start + pageSize;
+        for (int i = start; i < end; i++)
+        {
+            Room room = list.get(i);
+            if (room.accountId == accountId)
+            {
+                result.add(room);
+            }
+        }
+        return result;
     }
 }
