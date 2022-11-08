@@ -1,5 +1,6 @@
 package com.StefanAgustoHutapeaJSleepDN.controller;
 
+import com.StefanAgustoHutapeaJSleepDN.Account;
 import com.StefanAgustoHutapeaJSleepDN.Payment;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonAutowired;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonTable;
@@ -11,13 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
     public static JsonTable<Payment> paymentTable;
 
+
     @PostMapping("/{id}/cancel")
-    public PaymentController cancel() {
+    public PaymentController cancel(
+            @RequestParam int id
+    ){
         return null;
     }
-
+    
     @PostMapping("/payment")
-    public boolean accept (int id) {
+    public boolean accept (
+            @RequestParam int id) {
         return false;
     }
 
