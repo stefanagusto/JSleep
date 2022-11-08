@@ -1,4 +1,7 @@
 package com.StefanAgustoHutapeaJSleepDN;
+
+import com.StefanAgustoHutapeaJSleepDN.dbjson.Serializable;
+
 import java.util.Date;
 
 //subclass of Serializable

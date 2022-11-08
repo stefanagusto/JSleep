@@ -1,5 +1,9 @@
 package com.StefanAgustoHutapeaJSleepDN;
 
+import com.StefanAgustoHutapeaJSleepDN.Price;
+import com.StefanAgustoHutapeaJSleepDN.Type;
+import com.StefanAgustoHutapeaJSleepDN.dbjson.Serializable;
+
 public class Voucher extends Serializable
 {
     // instance variables 

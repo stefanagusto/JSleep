@@ -1,7 +1,7 @@
-package com.StefanAgustoHutapeaJSleepDN;
+package com.StefanAgustoHutapeaJSleepDN.dbjson;
 import java.util.HashMap;
 
-public class Serializable
+public class Serializable implements Comparable<Serializable>
 {
     public final int id;
     //Variabel Instance name mapCounter with data type HashMap with generic Class<?> as Key and Integer as Value that is serial.
@@ -39,7 +39,7 @@ public class Serializable
         return this.id == other.id;
     }
 
-    public <T> Integer setClosingId(Class<T> set, int num)
+    public static <T> Integer setClosingId(Class<T> set, int num)
     {
         return mapCounter.put(set, num);
     }

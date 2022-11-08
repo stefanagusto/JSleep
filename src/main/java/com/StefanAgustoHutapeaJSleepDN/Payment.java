@@ -1,4 +1,5 @@
 package com.StefanAgustoHutapeaJSleepDN;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +33,7 @@ public class Payment extends Invoice
         return new SimpleDateFormat("'Formatted Date = 'dd MMMM yyyy").format(time.getTime());
     }
 
-    public static boolean availability(Date from,Date to,Room room)
+    public static boolean availability(Date from, Date to, Room room)
     {
         if(from.after(to) ||to.before(from)||from.equals(to))
         {

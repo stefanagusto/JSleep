@@ -1,4 +1,10 @@
 package com.StefanAgustoHutapeaJSleepDN;
+import com.StefanAgustoHutapeaJSleepDN.BedType;
+import com.StefanAgustoHutapeaJSleepDN.City;
+import com.StefanAgustoHutapeaJSleepDN.Facility;
+import com.StefanAgustoHutapeaJSleepDN.Price;
+import com.StefanAgustoHutapeaJSleepDN.dbjson.Serializable;
+
 import java.util.Date;
 import java.util.ArrayList;
 

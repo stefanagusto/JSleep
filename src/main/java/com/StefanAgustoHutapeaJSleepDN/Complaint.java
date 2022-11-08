@@ -1,5 +1,7 @@
 package com.StefanAgustoHutapeaJSleepDN;
 
+import com.StefanAgustoHutapeaJSleepDN.dbjson.Serializable;
+
 public class Complaint extends Serializable
 {
     public String desc, date;

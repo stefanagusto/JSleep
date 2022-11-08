@@ -1,7 +1,9 @@
 package com.StefanAgustoHutapeaJSleepDN;
 
+import com.StefanAgustoHutapeaJSleepDN.dbjson.Serializable;
+
 //subclass of Serializable
-public class Renter extends Serializable 
+public class Renter extends Serializable
 {
     /** Initializes default value field address as empty string
     default phoneNumber is 0*/

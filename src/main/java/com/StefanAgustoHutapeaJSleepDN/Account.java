@@ -1,11 +1,15 @@
 package com.StefanAgustoHutapeaJSleepDN;
 
+import com.StefanAgustoHutapeaJSleepDN.dbjson.Serializable;
+
 //subclass of Serializable
 public class Account extends Serializable
 {
     public String name;
     public String email;
     public String password;
+    public double balance;
+    public Renter renter;
 
     //REGEX_EMAIL (ex: local@domain, local : only number and alphabet, no whitespace. domain : only alphabet, no whitespace, ending with top level domain and no dot at the end)
     public static final String REGEX_EMAIL = "^\\w+@\\w+([\\.-]?\\w+)*.?\\w+$";
