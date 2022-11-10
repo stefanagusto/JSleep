@@ -1,8 +1,5 @@
 package com.StefanAgustoHutapeaJSleepDN;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonDBEngine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

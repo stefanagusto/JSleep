@@ -1,17 +1,16 @@
 package com.StefanAgustoHutapeaJSleepDN.controller;
 
-import com.StefanAgustoHutapeaJSleepDN.Account;
 import com.StefanAgustoHutapeaJSleepDN.Payment;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonAutowired;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 
 public class PaymentController {
     public static JsonTable<Payment> paymentTable;
 
+    @JsonAutowired(value = Payment.class, filepath = "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\src\\json\\payment.json")
 
     @PostMapping("/{id}/cancel")
     public PaymentController cancel(
@@ -19,8 +18,8 @@ public class PaymentController {
     ){
         return null;
     }
-    
-    @PostMapping("/payment")
+
+    @PostMapping("/{id}/accept")
     public boolean accept (
             @RequestParam int id) {
         return false;
@@ -30,6 +29,7 @@ public class PaymentController {
         return paymentTable;
     }
 
+    @PostMapping("/create")
     public Payment create (
             @RequestParam int buyerId,
             @RequestParam int renterId,
@@ -41,6 +41,7 @@ public class PaymentController {
 
     @PostMapping("/{id}/submit")
     public PaymentController submit() {
+
         return null;
     }
 }

@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/account")
 public interface BasicGetController <T extends Serializable> {
-    @GetMapping("/person")
+    @GetMapping("/page")
     public default List<T> getPage(
             @RequestParam int page,
             @RequestParam int pageSize
@@ -21,7 +21,7 @@ public interface BasicGetController <T extends Serializable> {
         return Algorithm.<T>paginate(getJsonTable(), page, pageSize, pred->true);
     }
 
-    @GetMapping("/person/{id}")
+    @GetMapping("{id}")
     public default T getById(
             @PathVariable int id
     )

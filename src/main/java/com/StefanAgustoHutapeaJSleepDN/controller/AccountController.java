@@ -15,16 +15,17 @@ import java.util.regex.Pattern;
 
 public class AccountController implements BasicGetController<Account>{
     public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
+    public static final String REGEX_PATTER_PASSWORD = (Pattern.compile(REGEX_PASSWORD)).pattern();
     public static final String REGEX_EMAIL = "^\\w+@\\w+([\\.-]?\\w+)*.?\\w+$";
-    public static final String REGEX_PATTERN_EMAIL = "^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$";
-    public static final String REGEX_PATTER_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
-    @JsonAutowired(value = Account.class, filepath = "src/json/account.json")
-    public static JsonTable<Account> accountTable;
+    public static final String REGEX_PATTERN_EMAIL = (Pattern.compile(REGEX_EMAIL)).pattern();
 
+    @JsonAutowired(value = Account.class, filepath = "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\src\\json\\account.json")
+    public static JsonTable<Account> accountTable;
 
     @Override
     @GetMapping("/account")
     public JsonTable<Account> getJsonTable() {
+
         return accountTable;
     }
 
@@ -39,7 +40,16 @@ public class AccountController implements BasicGetController<Account>{
             @RequestParam String email,
             @RequestParam String password
             ){
-        return null;
+        //Hash on password with MD5 algorithm
+        password = Algorithm.hashMD5(password);
+        Account account = new Account(name, email, password);
+        accountTable.add(account);
+        for (Account a : accountTable){
+            if(account.email.equals(email) || (name.isBlank()) || account.validate()){
+                return null;
+            }
+        }
+        return new Account(name, email, password);
      }
 
     @PostMapping("/login")
@@ -47,7 +57,14 @@ public class AccountController implements BasicGetController<Account>{
             @RequestParam String email,
             @RequestParam String password
             ){
-        return null;
+        //Hash on password with MD5 algorithm
+        password = Algorithm.hashMD5(password);
+        for (Account data : accountTable){
+            if(data.email.equals(email) && data.password.equals(password)){
+                return data;
+            }
+        }
+         return null;
      }
     @PostMapping("/{id}/registerRenter")
     Renter registerRenter(

@@ -1,8 +1,7 @@
 package com.StefanAgustoHutapeaJSleepDN;
 
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 //subclass of Invoice
 public class Payment extends Invoice
@@ -27,11 +26,6 @@ public class Payment extends Invoice
         this.roomId = roomId;
     }
 
-    public String getTime()
-    {
-        //Return field time of Payment class
-        return new SimpleDateFormat("'Formatted Date = 'dd MMMM yyyy").format(time.getTime());
-    }
 
     public static boolean availability(Date from, Date to, Room room)
     {
