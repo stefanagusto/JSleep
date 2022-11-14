@@ -4,13 +4,9 @@ import com.StefanAgustoHutapeaJSleepDN.Account;
 import com.StefanAgustoHutapeaJSleepDN.Algorithm;
 import com.StefanAgustoHutapeaJSleepDN.Renter;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonTable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonAutowired;
 import java.util.regex.Pattern;
-
 
 
 public class AccountController implements BasicGetController<Account>{
@@ -22,7 +18,6 @@ public class AccountController implements BasicGetController<Account>{
     @JsonAutowired(value = Account.class, filepath = "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\src\\json\\account.json")
     public static JsonTable<Account> accountTable;
 
-    @Override
     @GetMapping("/account")
     public JsonTable<Account> getJsonTable() {
 
@@ -35,11 +30,11 @@ public class AccountController implements BasicGetController<Account>{
     }
 
     @PostMapping("/register")
-     Account register(
+    Account register(
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password
-            ){
+    ){
         //Hash on password with MD5 algorithm
         password = Algorithm.hashMD5(password);
         Account account = new Account(name, email, password);
@@ -50,13 +45,13 @@ public class AccountController implements BasicGetController<Account>{
             }
         }
         return new Account(name, email, password);
-     }
+    }
 
     @PostMapping("/login")
-     Account login(
+    Account login(
             @RequestParam String email,
             @RequestParam String password
-            ){
+    ){
         //Hash on password with MD5 algorithm
         password = Algorithm.hashMD5(password);
         for (Account data : accountTable){
@@ -64,15 +59,22 @@ public class AccountController implements BasicGetController<Account>{
                 return data;
             }
         }
-         return null;
-     }
+        return null;
+    }
     @PostMapping("/{id}/registerRenter")
     Renter registerRenter(
             @RequestParam int id,
             @RequestParam String username,
             @RequestParam String address,
             @RequestParam String phoneNumber
-            ){
+    ){
+        for (Account account : getJsonTable()){
+            if(account.id == id){
+                Renter renter = new Renter(username, address, phoneNumber);
+                account.renter = renter;
+                return renter;
+            }
+        }
         return null;
     }
 }

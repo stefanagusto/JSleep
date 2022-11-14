@@ -26,6 +26,13 @@ public class Payment extends Invoice
         this.roomId = roomId;
     }
 
+    public Payment(int id, int buyerId, int renterId, int roomId, Date dateFrom, Date dateTo) {
+        super(buyerId, renterId);
+        this.to = new Date(dateTo.getTime());
+        this.from = new Date(dateFrom.getTime());
+        this.roomId = roomId;
+    }
+
 
     public static boolean availability(Date from, Date to, Room room)
     {

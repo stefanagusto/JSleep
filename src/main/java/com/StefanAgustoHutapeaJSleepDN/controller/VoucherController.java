@@ -3,12 +3,10 @@ package com.StefanAgustoHutapeaJSleepDN.controller;
 import com.StefanAgustoHutapeaJSleepDN.Voucher;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonAutowired;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonTable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 public class VoucherController implements BasicGetController<Voucher> {
 
