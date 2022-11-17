@@ -1,16 +1,17 @@
 package com.StefanAgustoHutapeaJSleepDN.controller;
 
-import com.StefanAgustoHutapeaJSleepDN.Voucher;
+import com.StefanAgustoHutapeaJSleepDN.*;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonAutowired;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+@RestController
+@RequestMapping("/voucher")
 public class VoucherController implements BasicGetController<Voucher> {
 
-    @JsonAutowired(value = Voucher.class, filepath = "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\src\\json\\voucher.json")
+    @JsonAutowired(value = Voucher.class, filepath = "src/json/voucher.json")
     public static JsonTable<Voucher> voucherTable;
 
     @Override
@@ -21,7 +22,8 @@ public class VoucherController implements BasicGetController<Voucher> {
     @GetMapping("/voucher/{id}/isUsed")
     boolean isUsed(@PathVariable int id)
     {
-        return false;
+        Voucher voucher = Algorithm.<Voucher>find(getJsonTable(), pred -> pred.id == id);
+        return voucher.isUsed();
     }
     @GetMapping("/voucher/{id}/canApply")
     boolean canApply
@@ -30,7 +32,8 @@ public class VoucherController implements BasicGetController<Voucher> {
                     @RequestParam double price
             )
     {
-        return false;
+        Voucher voucher = Algorithm.<Voucher>find(getJsonTable(), pred -> pred.id == id);
+        return voucher.canApply(new Price(price));
     }
     @GetMapping("/voucher/getAvailable")
     List<Voucher> getAvailable
@@ -39,6 +42,6 @@ public class VoucherController implements BasicGetController<Voucher> {
                     @RequestParam int pageSize
             )
     {
-        return null;
+        return Algorithm.paginate(getJsonTable(), page, pageSize, pred -> !pred.isUsed());
     }
 }

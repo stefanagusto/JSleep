@@ -6,19 +6,25 @@ import com.StefanAgustoHutapeaJSleepDN.Renter;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonAutowired;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
+@RestController
+@RequestMapping("/account")
 
 public class AccountController implements BasicGetController<Account>{
-    public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
-    public static final String REGEX_PATTER_PASSWORD = (Pattern.compile(REGEX_PASSWORD)).pattern();
-    public static final String REGEX_EMAIL = "^\\w+@\\w+([\\.-]?\\w+)*.?\\w+$";
-    public static final String REGEX_PATTERN_EMAIL = (Pattern.compile(REGEX_EMAIL)).pattern();
+    @JsonAutowired(filepath = "src/json/account.json", value = Account.class)
+    public static final String REGEX_PASSWORD = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$";
+    Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
+    public static final String REGEX_EMAIL = "^[A-Za-z0-9]+@[A-Za-z]+\\.[A-Za-z.]+[^.]$";
+    Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
 
-    @JsonAutowired(value = Account.class, filepath = "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\src\\json\\account.json")
+
     public static JsonTable<Account> accountTable;
 
-    @GetMapping("/account")
+    @Override
     public JsonTable<Account> getJsonTable() {
 
         return accountTable;
@@ -26,6 +32,12 @@ public class AccountController implements BasicGetController<Account>{
 
     @PostMapping("/{id}/topUp")
     boolean topUp(@PathVariable int id, @RequestParam double balance){
+        for(Account singleAccount : accountTable){
+            if(singleAccount.id == id){
+                singleAccount.balance += balance;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -34,31 +46,32 @@ public class AccountController implements BasicGetController<Account>{
             @RequestParam String name,
             @RequestParam String email,
             @RequestParam String password
-    ){
+    ) throws NoSuchAlgorithmException {
         //Hash on password with MD5 algorithm
-        password = Algorithm.hashMD5(password);
-        Account account = new Account(name, email, password);
-        accountTable.add(account);
-        for (Account a : accountTable){
-            if(account.email.equals(email) || (name.isBlank()) || account.validate()){
-                return null;
+        if(!name.isBlank()){
+            if(REGEX_PATTERN_EMAIL.matcher(email).matches()){
+                if(REGEX_PATTERN_PASSWORD.matcher(password).matches()){
+                    String hash = hash(password);
+                    Account account = new Account(name, email, hash);
+                    accountTable.add(account);
+                    return account;
+                }
             }
         }
-        return new Account(name, email, password);
+        return null;
     }
 
     @PostMapping("/login")
     Account login(
             @RequestParam String email,
             @RequestParam String password
-    ){
-        //Hash on password with MD5 algorithm
-        password = Algorithm.hashMD5(password);
-        for (Account data : accountTable){
-            if(data.email.equals(email) && data.password.equals(password)){
-                return data;
-            }
-        }
+    ) throws NoSuchAlgorithmException {
+       for(Account account :getJsonTable()){
+           String hash = hash(password);
+           if(account.email.equals(email) && account.password.equals(hash)){
+               return account;
+           }
+       }
         return null;
     }
     @PostMapping("/{id}/registerRenter")
@@ -68,7 +81,7 @@ public class AccountController implements BasicGetController<Account>{
             @RequestParam String address,
             @RequestParam String phoneNumber
     ){
-        for (Account account : getJsonTable()){
+        for (Account account : accountTable){
             if(account.id == id){
                 Renter renter = new Renter(username, address, phoneNumber);
                 account.renter = renter;
@@ -76,5 +89,16 @@ public class AccountController implements BasicGetController<Account>{
             }
         }
         return null;
+    }
+
+    public static String hash(String password) throws NoSuchAlgorithmException{
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] bytes = md.digest();
+        StringBuilder sb = new StringBuilder();
+        for (byte aByte : bytes) {
+            sb.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+        }
+        return sb.toString();
     }
 }

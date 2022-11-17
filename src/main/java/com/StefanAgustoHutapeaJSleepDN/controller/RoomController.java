@@ -1,19 +1,19 @@
 package com.StefanAgustoHutapeaJSleepDN.controller;
 
 
-import com.StefanAgustoHutapeaJSleepDN.City;
-import com.StefanAgustoHutapeaJSleepDN.Facility;
-import com.StefanAgustoHutapeaJSleepDN.Room;
-import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonAutowired;
-import com.StefanAgustoHutapeaJSleepDN.dbjson.JsonTable;
+import com.StefanAgustoHutapeaJSleepDN.*;
+import com.StefanAgustoHutapeaJSleepDN.dbjson.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import static com.StefanAgustoHutapeaJSleepDN.controller.AccountController.accountTable;
 
 
 //inheritance from BasicGetController<Room>
+@RestController
+@RequestMapping("/room")
 public class RoomController implements BasicGetController<Room> {
     //override method getJsonTable() from BasicGetController<Room>
-    @JsonAutowired(value = Room.class, filepath = "C:\\Users\\ACER NITRO 5\\OneDrive - UNIVERSITAS INDONESIA\\DTE\\Mata Kuliah\\Sem 3\\Pemrograman Berorientasi Objek & Praktikum\\JSleep\\JSleep\\src\\json\\room.json")
+    @JsonAutowired(value = Room.class, filepath = "src/json/room.json")
     public static JsonTable<Room> roomTable;
 
     @Override
@@ -29,7 +29,7 @@ public class RoomController implements BasicGetController<Room> {
                     @RequestParam int pageSize
             )
     {
-        return null;
+        return Algorithm.paginate(getJsonTable(), page, pageSize, pred -> pred.accountId == id);
     }
 
     @PostMapping("/room/create")
@@ -43,6 +43,12 @@ public class RoomController implements BasicGetController<Room> {
             @RequestParam String address
             )
     {
-        return null;
+        Account account = Algorithm.<Account>find(accountTable, pred -> pred.id == accountId && pred.renter != null);
+        if(account == null) return null;
+        else {
+            Room room = new Room(accountId, name, size, new Price(price), facility, city, address);
+            roomTable.add(room);
+            return room;
+        }
     }
 }
