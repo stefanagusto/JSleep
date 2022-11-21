@@ -5,15 +5,13 @@ import com.StefanAgustoHutapeaJSleepDN.*;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.*;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import static com.StefanAgustoHutapeaJSleepDN.controller.AccountController.accountTable;
 
 
 //inheritance from BasicGetController<Room>
 @RestController
 @RequestMapping("/room")
 public class RoomController implements BasicGetController<Room> {
-    //override method getJsonTable() from BasicGetController<Room>
-    @JsonAutowired(value = Room.class, filepath = "src/json/room.json")
+    @JsonAutowired(filepath = "src/json/room.json", value = Room.class)
     public static JsonTable<Room> roomTable;
 
     @Override
@@ -29,7 +27,7 @@ public class RoomController implements BasicGetController<Room> {
                     @RequestParam int pageSize
             )
     {
-        return Algorithm.paginate(getJsonTable(), page, pageSize, pred -> pred.accountId == id);
+        return Algorithm.paginate(getJsonTable(), page, pageSize, pred->pred.accountId == id);
     }
 
     @PostMapping("/room/create")
@@ -43,7 +41,7 @@ public class RoomController implements BasicGetController<Room> {
             @RequestParam String address
             )
     {
-        Account account = Algorithm.<Account>find(accountTable, pred -> pred.id == accountId && pred.renter != null);
+        Account account = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == accountId && pred.renter != null);
         if(account == null) return null;
         else {
             Room room = new Room(accountId, name, size, new Price(price), facility, city, address);
