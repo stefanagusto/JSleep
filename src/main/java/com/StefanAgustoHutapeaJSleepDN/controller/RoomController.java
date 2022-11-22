@@ -10,16 +10,21 @@ import java.util.List;
 //inheritance from BasicGetController<Room>
 @RestController
 @RequestMapping("/room")
-public class RoomController implements BasicGetController<Room> {
-    @JsonAutowired(filepath = "src/json/room.json", value = Room.class)
+public class RoomController implements BasicGetController<Room>{
+    @JsonAutowired(value = Room.class, filepath = "room.json")
     public static JsonTable<Room> roomTable;
+
+    @GetMapping
+    String index() {
+        return "room page";
+    }
 
     @Override
     public JsonTable<Room> getJsonTable() {
         return roomTable;
     }
 
-    @GetMapping("/room/{id}/renter")
+    @GetMapping("/{id}/renter")
     List<Room> getRoomByRenter
             (
                     @PathVariable int id,
@@ -27,10 +32,10 @@ public class RoomController implements BasicGetController<Room> {
                     @RequestParam int pageSize
             )
     {
-        return Algorithm.paginate(getJsonTable(), page, pageSize, pred->pred.accountId == id);
+        return Algorithm.paginate(getJsonTable(), page, pageSize, pred -> pred.accountId == id);
     }
 
-    @PostMapping("/room/create")
+    @PostMapping("/create")
     public Room create(
             @RequestParam int accountId,
             @RequestParam String name,
@@ -39,11 +44,10 @@ public class RoomController implements BasicGetController<Room> {
             @RequestParam Facility facility,
             @RequestParam City city,
             @RequestParam String address
-            )
-    {
+    ){
         Account account = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == accountId && pred.renter != null);
         if(account == null) return null;
-        else {
+        else{
             Room room = new Room(accountId, name, size, new Price(price), facility, city, address);
             roomTable.add(room);
             return room;

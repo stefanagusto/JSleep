@@ -20,9 +20,9 @@ public class PaymentController implements BasicGetController<Payment> {
         return paymentTable;
     }
 
-    @PostMapping("/payment/{id}/cancel")
+    @PostMapping("/{id}/cancel")
     public boolean cancel(
-            @RequestParam int id
+            @PathVariable int id
     ){
         Payment payment = Algorithm.<Payment>find(getJsonTable(), pred -> pred.id == id);
         if(payment != null && payment.status == Invoice.PaymentStatus.WAITING){
@@ -35,9 +35,9 @@ public class PaymentController implements BasicGetController<Payment> {
         return false;
     }
 
-    @PostMapping("/payment/{id}/accept")
+    @PostMapping("/{id}/accept")
     public boolean accept (
-            @RequestParam int id) {
+            @PathVariable int id) {
         Payment payment = Algorithm.<Payment>find(paymentTable, pred -> pred.id == id);
         if (payment != null && payment.status == Invoice.PaymentStatus.WAITING) {
             payment.status = Invoice.PaymentStatus.SUCCESS;
@@ -46,7 +46,7 @@ public class PaymentController implements BasicGetController<Payment> {
         return false;
     }
 
-    @PostMapping("/payment/create")
+    @PostMapping("/create")
     public Payment create (
             @RequestParam int buyerId,
             @RequestParam int renterId,
@@ -54,14 +54,15 @@ public class PaymentController implements BasicGetController<Payment> {
             @RequestParam String from,
             @RequestParam String to) throws ParseException {
         Account acc = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == buyerId && pred.id == buyerId);
-        Room room = Algorithm.<Room>find(RoomController.roomTable, pred -> pred.id == roomId && pred.accountId == roomId);
+        Room room = Algorithm.<Room>find(RoomController.roomTable, temp -> temp.id == roomId);
+        if (acc == null || room == null) return null;
         double price = room.price.price;
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dateFrom = sdf.parse(from);
         Date dateTo = sdf.parse(to);
 
-        if(acc.balance >= price && acc != null && room != null  ){
+        if(acc.balance >= price){
             Payment payment = new Payment(acc.id, buyerId, renterId, roomId, dateFrom, dateTo);
             acc.balance -= price;
             payment.status=Invoice.PaymentStatus.WAITING;
