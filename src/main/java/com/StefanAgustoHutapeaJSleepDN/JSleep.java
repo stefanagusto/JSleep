@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Case Study 7
+ * Proyek Akhir
  * Stefan Agusto Hutapea
  * 2106700744
  */

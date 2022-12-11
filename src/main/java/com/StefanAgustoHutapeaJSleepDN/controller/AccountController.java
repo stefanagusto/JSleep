@@ -49,29 +49,30 @@ public class AccountController implements BasicGetController<Account> {
 
     @PostMapping("/register")
     Account register( @RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        boolean findEmail = REGEX_PATTERN_EMAIL.matcher(email).find();
-        boolean findPassword = REGEX_PATTERN_PASSWORD.matcher(password).find();
-        try {
-            MessageDigest MD = MessageDigest.getInstance("MD5");
-            MD.update(password.getBytes());
-            byte[] bytes = MD.digest();
-            StringBuilder strBuild = new StringBuilder();
-            for (byte aByte : bytes) {
-                strBuild.append(Integer.toString((aByte & 0xff) + 0x100, 16).substring(1));
+        String generatedPassword = null;
+        for (Account account : accountTable){
+            if(account.email.equals(email) || (name.isBlank()) || account.validate()){
+                return null;
             }
-            password = strBuild.toString();
+        }
+        try{
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(password.getBytes());
+            byte[] bytes = md.digest();
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        if (findEmail || findPassword || !name.isBlank() && !accountTable.stream().anyMatch(account -> account.email.equals(email))) {
-            Account account = new Account(name, email, password);
-            accountTable.add(account);
-            return account;
-        }
-        else{
-            return null;
-        }
+        Account newAccount = new Account(name, email, generatedPassword);
+        accountTable.add(newAccount);
+        return newAccount;
     }
+
     @PostMapping("/{id}/registerRenter")
     Renter registerRenter (@PathVariable int id,
                            @RequestParam String username,

@@ -4,6 +4,8 @@ package com.StefanAgustoHutapeaJSleepDN.controller;
 import com.StefanAgustoHutapeaJSleepDN.*;
 import com.StefanAgustoHutapeaJSleepDN.dbjson.*;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -11,7 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/room")
 public class RoomController implements BasicGetController<Room>{
-    @JsonAutowired(value = Room.class, filepath = "room.json")
+    @JsonAutowired(value = Room.class, filepath = "json/room.json")
     public static JsonTable<Room> roomTable;
 
     @GetMapping
@@ -41,16 +43,34 @@ public class RoomController implements BasicGetController<Room>{
             @RequestParam String name,
             @RequestParam int size,
             @RequestParam int price,
-            @RequestParam Facility facility,
+            @RequestParam ArrayList<Facility> facility,
             @RequestParam City city,
-            @RequestParam String address
+            @RequestParam String address,
+            @RequestParam BedType bedType
     ){
-        Account account = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == accountId && pred.renter != null);
-        if(account == null) return null;
-        else{
-            Room room = new Room(accountId, name, size, new Price(price), facility, city, address);
+        Account account = Algorithm.<Account>find(AccountController.accountTable, acc -> acc.id == accountId);
+        if(account != null || account.renter != null){
+            Room room = new Room(accountId, name, size, new Price(price), facility, city, address, bedType);
             roomTable.add(room);
             return room;
+        }else{
+            return null;
+        }
+    }
+
+    @GetMapping("/getAllRoom")
+    public List<Room> getAllRoom(@RequestParam int page, @RequestParam int pageSize){
+        return Algorithm.<Room>paginate(getJsonTable(), page, pageSize, pred -> true);
+    }
+
+    @DeleteMapping("/{id}/deleteRoom")
+    public boolean deleteRoom(@PathVariable int id){
+        Room room = Algorithm.<Room>find(getJsonTable(), pred -> pred.id == id);
+        if(room != null){
+            getJsonTable().remove(room);
+            return true;
+        }else{
+            return false;
         }
     }
 }
