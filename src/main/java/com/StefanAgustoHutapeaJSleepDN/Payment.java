@@ -8,7 +8,7 @@ public class Payment extends Invoice
 {
     public Date to, from;
     private int roomId;
-
+    public double totalPrice;
 
     public Payment(int buyerId, int renterId, int roomId, Date from, Date to)
     {
@@ -32,7 +32,6 @@ public class Payment extends Invoice
         this.from = new Date(dateFrom.getTime());
         this.roomId = roomId;
     }
-
 
     public static boolean availability(Date from, Date to, Room room)
     {

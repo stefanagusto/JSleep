@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.concurrent.TimeUnit;
+/**
+ * Javadoc
+ * @author Stefan Agusto Hutapea
+ */
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment> {
@@ -47,28 +51,28 @@ public class PaymentController implements BasicGetController<Payment> {
     }
 
     @PostMapping("/create")
-    public Payment create (
-            @RequestParam int buyerId,
-            @RequestParam int renterId,
-            @RequestParam int roomId,
-            @RequestParam String from,
-            @RequestParam String to) throws ParseException {
-        Account acc = Algorithm.<Account>find(AccountController.accountTable, pred -> pred.id == buyerId && pred.id == buyerId);
-        Room room = Algorithm.<Room>find(RoomController.roomTable, temp -> temp.id == roomId);
-        if (acc == null || room == null) return null;
-        double price = room.price.price;
-
+    public Payment create( @RequestParam int buyerId, @RequestParam int renterId, @RequestParam int roomId,  @RequestParam String from,@RequestParam String to){
+        Room roomCheck = Algorithm.<Room>find(RoomController.roomTable, room -> room.id == roomId);
+        Account accountCheck = Algorithm.<Account>find(AccountController.accountTable, acc -> acc.id == buyerId);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dateFrom = sdf.parse(from);
-        Date dateTo = sdf.parse(to);
-
-        if(acc.balance >= price){
-            Payment payment = new Payment(acc.id, buyerId, renterId, roomId, dateFrom, dateTo);
-            acc.balance -= price;
-            payment.status=Invoice.PaymentStatus.WAITING;
-            Payment.makeBooking(dateFrom, dateTo, room);
-            paymentTable.add(payment);
-            return payment;
+        try {
+            Date fromTgl = sdf.parse(from);
+            Date toTgl = sdf.parse(to);
+            long day = toTgl.getTime() - fromTgl.getTime();
+            double totalPay = roomCheck.price.price * (TimeUnit.MILLISECONDS.toDays(day));
+            if(accountCheck != null && roomCheck != null && totalPay <= accountCheck.balance && Payment.availability(fromTgl, toTgl, roomCheck)){
+                Payment paid = new Payment(buyerId, renterId, roomId, fromTgl, toTgl);
+                accountCheck.balance -= totalPay;
+                paid.totalPrice = totalPay;
+                paid.status = Invoice.PaymentStatus.WAITING;
+                Payment.makeBooking(fromTgl, toTgl, roomCheck);
+                paymentTable.add(paid);
+                return paid;
+            }else{
+                return null;
+            }
+        } catch (ParseException p) {
+            p.printStackTrace();
         }
         return null;
     }
